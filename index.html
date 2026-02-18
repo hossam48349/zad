@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>زاد - تتبع ختم القرآن الكريم</title>
+    
+    <!-- Bootstrap RTL -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts - Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    
+    <!-- Animated Background -->
+    <div class="bg-particles"></div>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-moon-stars me-2"></i>
+                زاد
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">الرئيسية</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#stats">الإحصائيات</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#achievements">الإنجازات</a>
+                    </li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-success btn-icon" id="exportBtn" title="تصدير البيانات">
+                        <i class="fas fa-download"></i>
+                    </button>
+                    <button class="btn btn-outline-primary btn-icon" id="themeToggle" title="تبديل الوضع">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="btn btn-outline-danger btn-icon" id="resetBtn" title="إعادة تعيين الخطة">
+                        <i class="fas fa-rotate-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="hero-content text-center">
+                <div class="crescent-decoration"></div>
+                <h1 class="hero-title fade-in">رمضان كريم</h1>
+                <p class="hero-subtitle fade-in">
+                    "شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ"
+                </p>
+                <p class="hero-quote fade-in">
+                    اجعل هذا الشهر الفضيل فرصة لختم القرآن الكريم
+                </p>
+                <button class="btn btn-primary btn-lg cta-btn fade-in" onclick="document.getElementById('planCard').scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-rocket me-2"></i>
+                    ابدأ خطتك الآن
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Plan Setup Section -->
+    <section class="plan-section">
+        <div class="container">
+            <div class="glass-card" id="planCard">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-check me-2"></i>إعداد خطة الختم</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="form-label">نوع الهدف</label>
+                            <select class="form-select" id="goalType">
+                                <option value="full">ختم القرآن (30 جزء)</option>
+                                <option value="custom">هدف مخصص</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label class="form-label">عدد الأيام</label>
+                            <input type="number" class="form-control" id="daysInput" min="1" placeholder="مثال: 30">
+                        </div>
+                        
+                        <div class="col-md-6" id="customTargetGroup" style="display: none;">
+                            <label class="form-label">عدد الأجزاء المستهدفة</label>
+                            <input type="number" class="form-control" id="targetPartsInput" min="0.25" step="0.25" placeholder="مثال: 15">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-check form-switch mt-4">
+                                <input class="form-check-input" type="checkbox" id="ramadanMode">
+                                <label class="form-check-label" for="ramadanMode">
+                                    <i class="fas fa-moon me-1"></i>
+                                    وضع رمضان
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6" id="ramadanEndGroup" style="display: none;">
+                            <label class="form-label">تاريخ نهاية رمضان</label>
+                            <input type="date" class="form-control" id="ramadanEndDate">
+                        </div>
+                        
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-lg w-100" id="savePlanBtn">
+                                <i class="fas fa-save me-2"></i>
+                                حفظ الخطة
+                            </button>
+                        </div>
+                        
+                        <div class="col-12" id="planSummary" style="display: none;">
+                            <div class="alert alert-success">
+                                <h5 class="alert-heading"><i class="fas fa-check-circle me-2"></i>خطتك جاهزة!</h5>
+                                <hr>
+                                <div class="row text-center">
+                                    <div class="col-md-4">
+                                        <div class="stat-item">
+                                            <i class="fas fa-book-quran"></i>
+                                            <div class="stat-value" id="dailyWird">0</div>
+                                            <div class="stat-label">الورد اليومي (جزء)</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="stat-item">
+                                            <i class="fas fa-calendar-day"></i>
+                                            <div class="stat-value" id="startDateDisplay">-</div>
+                                            <div class="stat-label">تاريخ البداية</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="stat-item">
+                                            <i class="fas fa-bullseye"></i>
+                                            <div class="stat-value" id="targetDisplay">30</div>
+                                            <div class="stat-label">الهدف (جزء)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section class="stats-section" id="stats">
+        <div class="container">
+            <div class="glass-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-line me-2"></i>تقدمك الروحي</h3>
+                </div>
+                <div class="card-body">
+                    <div class="progress-container mb-4">
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="progressFill" style="width: 0%">
+                                <span class="progress-text" id="progressText">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row g-4 text-center">
+                        <div class="col-md-3 col-6">
+                            <div class="stat-card">
+                                <i class="fas fa-book-open stat-icon"></i>
+                                <div class="stat-number" id="totalRead">0</div>
+                                <div class="stat-title">المقروء (جزء)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-card">
+                                <i class="fas fa-hourglass-half stat-icon"></i>
+                                <div class="stat-number" id="remaining">30</div>
+                                <div class="stat-title">المتبقي (جزء)</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-card">
+                                <i class="fas fa-calendar-days stat-icon"></i>
+                                <div class="stat-number" id="daysLeft">-</div>
+                                <div class="stat-title">الأيام المتبقية</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <div class="stat-card">
+                                <span class="badge-status" id="statusBadge">ابدأ بخطة</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="completionCelebration" class="celebration-effect" style="display: none;">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements-section" id="achievements">
+        <div class="container">
+            <div class="glass-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-trophy me-2"></i>الإنجازات والشارات</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row g-4" id="achievementsGrid">
+                        <!-- Achievements will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Charts Section -->
+    <section class="charts-section">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-bar me-2"></i>إحصائيات الأسبوع</h3>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="weeklyChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-fire me-2"></i>سلسلة الأيام المتتالية</h3>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="streak-display">
+                                <i class="fas fa-fire streak-icon"></i>
+                                <div class="streak-number" id="streakNumber">0</div>
+                                <div class="streak-label">يوم متتالي</div>
+                            </div>
+                            <div class="streak-info mt-3">
+                                <p class="text-muted mb-1">أطول سلسلة: <strong id="longestStreak">0</strong> يوم</p>
+                                <p class="text-muted">استمر في القراءة يومياً للحفاظ على السلسلة!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Log Section -->
+    <section class="log-section">
+        <div class="container">
+            <div class="glass-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-pen-to-square me-2"></i>تسجيل القراءة اليومية</h3>
+                </div>
+                <div class="card-body"></div>
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-6">
+                            <label class="form-label">كم جزء قرأت اليوم؟</label>
+                            <input type="number" class="form-control form-control-lg" id="readingInput" 
+                                   min="0.25" step="0.25" placeholder="مثال: 1 أو 0.5" disabled>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">ملاحظات (اختياري)</label>
+                            <input type="text" class="form-control form-control-lg" id="notesInput" 
+                                   placeholder="مثال: سورة البقرة" disabled>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="form-label d-none d-md-block">&nbsp;</label>
+                            <button class="btn btn-success btn-lg w-100" id="addReadingBtn" disabled>
+                                <i class="fas fa-plus me-2"></i>
+                                إضافة
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Add Buttons -->
+                    <div class="quick-add-section mb-4">
+                        <label class="form-label">إضافة سريعة:</label>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <button class="btn btn-outline-primary quick-add-btn" data-amount="0.25" disabled>ربع جزء</button>
+                            <button class="btn btn-outline-primary quick-add-btn" data-amount="0.5" disabled>نصف جزء</button>
+                            <button class="btn btn-outline-primary quick-add-btn" data-amount="1" disabled>جزء واحد</button>
+                            <button class="btn btn-outline-primary quick-add-btn" data-amount="2" disabled>جزءان</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Search and Filter -->
+                    <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <input type="text" class="form-control" id="searchLogs" placeholder="بحث في السجلات...">
+                        </div>
+                        <div class="col-md-6">
+                            <select class="form-select" id="filterLogs">
+                                <option value="all">جميع السجلات</option>
+                                <option value="today">اليوم</option>
+                                <option value="week">هذا الأسبوع</option>
+                                <option value="month">هذا الشهر</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>التاريخ</th>
+                                    <th>المقدار (جزء)</th>
+                                    <th>الملاحظات</th>
+                                    <th>إجراء</th>
+                                </tr>
+                            </thead>
+                            <tbody id="logsTableBody">
+                                <tr class="no-data">
+                                    <td colspan="4" class="text-center text-muted">
+                                        <i class="fas fa-inbox fa-2x mb-2"></i>
+                                        <p>لا توجد قراءات مسجلة بعد</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <button class="btn btn-outline-danger" id="clearLogsBtn" style="display: none;">
+                        <i class="fas fa-trash me-2"></i>
+                        مسح جميع السجلات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-divider"></div>
+            <div class="footer-content">
+                <p class="footer-text">
+                    صُمم وطُور بواسطة: <strong>Eng. Hossam Hassan</strong>
+                </p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/hossam-hassan-abd-al-bari/?skipRedirect=true" target="_blank" rel="noopener noreferrer" class="social-icon" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/hossam48349" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.facebook.com/hossam.hassan.312487?locale=ar_AR" target="_blank" rel="noopener noreferrer" class="social-icon" title="Facebook">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                    <a href="https://www.instagram.com/hossamhassan2451/" target="_blank" rel="noopener noreferrer" class="social-icon" title="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
+                <p class="footer-copyright">
+                    &copy; <span id="currentYear"></span> جميع الحقوق محفوظة
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toastNotification" class="toast" role="alert">
+            <div class="toast-header">
+                <i class="fas fa-bell me-2"></i>
+                <strong class="me-auto">إشعار</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
